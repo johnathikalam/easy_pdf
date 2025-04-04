@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Your Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="container mx-auto p-6 max-w-3xl">
+        <h1 class="text-2xl font-bold text-center mb-6">Chat with Your Document</h1>
+        
+        <!-- File Upload -->
+        <div class="bg-white p-4 rounded shadow mb-4">
+            <label class="block mb-2 font-medium">Upload PDF</label>
+            <input type="file" id="fileInput" class="border p-2 w-full">
+            <button onclick="uploadFile()" class="bg-blue-500 text-white px-4 py-2 mt-2 rounded">Upload</button>
+            <!-- Progress Bar -->
+            <div id="progressContainer" class="hidden mt-4">
+                <div class="bg-gray-300 h-2 w-full rounded">
+                    <div id="progressBar" class="bg-blue-500 h-2 rounded transition-all duration-500" style="width: 0%;"></div>
+                </div>
+                <p id="progressText" class="text-sm text-center mt-2 text-gray-700">Uploading...</p>
+            </div>
+        </div>
+
+        <!-- Clear Database -->
+        <button onclick="clearDatabase()" class="bg-red-500 text-white px-4 py-2 rounded">Clear Database</button>
+
+        <!-- Toggle External Knowledge -->
+        <div class="mt-4 flex items-center">
+            <label class="mr-2">Use External Knowledge:</label>
+            <input type="checkbox" id="toggleExternal" onchange="toggleExternal()">
+        </div>
+
+        <!-- Chat Section -->
+        <div class="bg-white p-4 rounded shadow mt-4">
+            <div id="chatBox" class="h-64 overflow-y-auto border p-2 mb-2"></div>
+            <input type="text" id="userInput" class="border p-2 w-full" placeholder="Ask something...">
+            <button onclick="sendMessage()" class="bg-green-500 text-white px-4 py-2 mt-2 rounded">Send</button>
+        </div>
+    </div>
+
+    <script>
+
+
+    function uploadFile() {
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+        if (!file) {
+            alert('Please select a file');
+            return;
+        }
+
+        // Show progress bar
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+
+        progressContainer.classList.remove('hidden');
+        progressBar.style.width = '0%';
+        progressText.textContent = 'Uploading...';
+
+        let formData = new FormData();
+        formData.append('file', file);
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', '/upload', true);
+
+        xhr.upload.onprogress = function(event) {
+            if (event.lengthComputable) {
+                let percent = Math.round((event.loaded / event.total) * 100);
+                progressBar.style.width = percent + '%';
+                progressText.textContent = `Uploading... ${percent}%`;
+            }
+        };
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                let response = JSON.parse(xhr.responseText);
+                alert(response.message || 'Upload successful');
+            } else {
+                alert('Upload failed');
+            }
+
+            setTimeout(() => {
+                progressContainer.classList.add('hidden');
+            }, 1000);
+        };
+
+        xhr.onerror = function() {
+            alert('Upload error');
+            progressContainer.classList.add('hidden');
+        };
+        xhr.send(formData);
+        }
+        function clearDatabase() {
+            fetch('/clear', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => alert(data.message))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function toggleExternal() {
+            fetch('/toggle', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => alert('External knowledge: ' + (data.use_external ? 'Enabled' : 'Disabled')))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            const chatBox = document.getElementById('chatBox');
+            chatBox.innerHTML += `<div class='mb-2'><strong>You:</strong> ${message}</div>`;
+            input.value = '';
+            
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: message })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    chatBox.innerHTML += `<div class='mb-2'><strong>AI:</strong> ${data.response}</div>`;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
