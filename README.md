@@ -17,14 +17,14 @@ This project is a **Flask-based web application** that enables users to **upload
 ---
 ## 🔧 Installation & Setup  
 
-### **1 Clone the Repository**  
+### **1. Clone the Repository**  
 
 ```sh
 git clone https://github.com/johnathikalam/easy_pdf.git
 cd easy_pdf
 ```
 
-### **2️⃣ Create a Virtual Environment**
+### **2. Create a Virtual Environment**
 ```sh
 Copy
 Edit
@@ -32,12 +32,12 @@ py -3.10 -m venv venv
 source venv/bin/activate   # On macOS/Linux
 venv\Scripts\activate      # On Windows
 ```
-### **3️⃣ Install Dependencies**
+### **3. Install Dependencies**
 ```sh
 
 pip install -r requirements.txt
 ```
-### **4️⃣ Set Up Environment Variables**
+### **4. Set Up Environment Variables**
 Create a .env file in the project root and add:
 
 ```ini
@@ -45,7 +45,7 @@ OPENAI_API_KEY=your_openai_api_key
 PINECONE_API_KEY=your_pinecone_api_key
 PINECONE_INDEX_NAME=your_pinecone_index
 ```
-### **▶️ Running the Application*
+### **5. Running the Application*
 Start the Flask server:
 
 ```sh
