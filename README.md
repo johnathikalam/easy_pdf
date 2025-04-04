@@ -15,24 +15,13 @@ This project is a **Flask-based web application** that enables users to **upload
 - 🎨 **Tailwind CSS-based UI** with animations  
 
 ---
-
-## 🏗️ Tech Stack  
-
-- **Frontend**: HTML, Tailwind CSS, JavaScript  
-- **Backend**: Flask, Python  
-- **AI Models**: OpenAI GPT-4o, OpenAI Embeddings  
-- **Vector Database**: Pinecone  
-- **Document Processing**: LangChain, PyPDFLoader  
-- **AI Technique**: **Retrieval-Augmented Generation (RAG)**  
-
----
 ## 🔧 Installation & Setup  
 
 ### **1️⃣ Clone the Repository**  
 
 ```sh
-git clone https://github.com/yourusername/ai-document-chatbot.git
-cd ai-document-chatbot
+git clone https://github.com/johnathikalam/easy_pdf.git
+cd easy_pdf
 ```
 
 ### **2️⃣ Create a Virtual Environment**
