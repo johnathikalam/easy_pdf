@@ -45,7 +45,7 @@ OPENAI_API_KEY=your_openai_api_key
 PINECONE_API_KEY=your_pinecone_api_key
 PINECONE_INDEX_NAME=your_pinecone_index
 ```
-### **5. Running the Application*
+### **5. Running the Application**
 Start the Flask server:
 
 ```sh
