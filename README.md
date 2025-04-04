@@ -17,7 +17,7 @@ This project is a **Flask-based web application** that enables users to **upload
 ---
 ## 🔧 Installation & Setup  
 
-### **1️1️⃣ Clone the Repository**  
+### **1 Clone the Repository**  
 
 ```sh
 git clone https://github.com/johnathikalam/easy_pdf.git
