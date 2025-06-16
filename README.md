@@ -26,8 +26,6 @@ cd easy_pdf
 
 ### **2. Create a Virtual Environment**
 ```sh
-Copy
-Edit
 py -3.10 -m venv venv
 source venv/bin/activate   # On macOS/Linux
 venv\Scripts\activate      # On Windows
