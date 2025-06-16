@@ -1,7 +1,8 @@
 #  AI-Powered RAG-Based Document Chatbot with Pinecone & OpenAI  
 
-This project is a **Flask-based web application** that enables users to **upload PDF files** and chat with their documents using **Retrieval-Augmented Generation (RAG)**. It leverages **Pinecone Vector Store** and **OpenAI's GPT model** to retrieve the most relevant document information before generating AI-powered responses.  
+**AI-Powered RAG-Based Document Chatbot with Pinecone & OpenAI** is a **Flask-based web application** that enables users to **upload PDF files** and chat with their documents using **Retrieval-Augmented Generation (RAG)**. It leverages **Pinecone Vector Store** and **OpenAI's GPT model** to retrieve the most relevant document information before generating AI-powered responses.  
 
+![Demo](assets/ezgif-43a8960d3104de.gif)
 ---
 
 ##  Features  
@@ -10,7 +11,6 @@ This project is a **Flask-based web application** that enables users to **upload
 -  **RAG-based chatbot** for improved document-based Q&A  
 -  **Store document embeddings** in Pinecone for fast retrieval  
 -  **Retrieve and generate responses** using OpenAI GPT-4o  
--  **Toggle external knowledge** for more comprehensive answers  
 -  **Clear stored vectors** anytime  
 -  **Tailwind CSS-based UI** with animations  
 
