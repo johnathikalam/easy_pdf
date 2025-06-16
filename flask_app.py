@@ -46,19 +46,25 @@ def upload_file():
 
     # Load and process PDF
     try:
+        print("loadinng")
         loader = PyPDFLoader(file_path)
+        print('loaded : ', loader)
         raw_docs = loader.load()
+        print('raw data')
         documents = text_splitter.split_documents(raw_docs)
+        print('document')
 
         # Ensure documents are not empty
         if not documents:
+            print("No text found in PDF.")
             return jsonify({"error": "No text found in PDF."}), 400
-
+        print("text found in PDF.")
         uuids = [f"id{i+1}" for i in range(len(documents))]
         vector_store.add_documents(documents=documents, ids=uuids)
         return jsonify({"message": "File uploaded and indexed successfully"})
 
     except Exception as e:
+        print(e)
         return jsonify({"error": str(e)}), 500
 
 @app.route('/clear', methods=['POST'])
