@@ -46,37 +46,25 @@ def upload_file():
 
     # Load and process PDF
     try:
-        print("loadinng")
         loader = PyPDFLoader(file_path)
-        print('loaded : ', loader)
         raw_docs = loader.load()
-        print('raw data')
         documents = text_splitter.split_documents(raw_docs)
-        print('document')
 
         # Ensure documents are not empty
         if not documents:
-            print("No text found in PDF.")
             return jsonify({"error": "No text found in PDF."}), 400
-        print("text found in PDF.")
         uuids = [f"id{i+1}" for i in range(len(documents))]
         vector_store.add_documents(documents=documents, ids=uuids)
         return jsonify({"message": "File uploaded and indexed successfully"})
 
     except Exception as e:
-        print(e)
         return jsonify({"error": str(e)}), 500
+
 
 @app.route('/clear', methods=['POST'])
 def clear_vectors():
     index.delete(delete_all=True)
     return jsonify({"message": "All vectors deleted from Pinecone"})
-
-@app.route('/toggle', methods=['POST'])
-def toggle_external():
-    global use_external
-    use_external = not use_external
-    return jsonify({"use_external": use_external})
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -95,8 +83,7 @@ def chat():
     Use the following retrieved context to answer the question.
     If you don't know, say you don't know.
     Use three sentences max and keep it concise.
-    Context: {docs_text if not use_external else docs_text + ' [External knowledge allowed]'}
-    """
+    Context: {docs_text} """
     
     chat_history.append(SystemMessage(system_prompt))
     llm = ChatOpenAI(model="gpt-4o", temperature=1)
