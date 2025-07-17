@@ -30,6 +30,10 @@ use_external = True
 def home():
     return render_template('index.html')
 
+def chunk_list(lst, size):
+    for i in range(0, len(lst), size):
+        yield lst[i:i + size]
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -54,7 +58,10 @@ def upload_file():
         if not documents:
             return jsonify({"error": "No text found in PDF."}), 400
         uuids = [f"id{i+1}" for i in range(len(documents))]
-        vector_store.add_documents(documents=documents, ids=uuids)
+        # vector_store.add_documents(documents=documents, ids=uuids)
+        batch_size = 50
+        for doc_batch, id_batch in zip(chunk_list(documents, batch_size), chunk_list(uuids, batch_size)):
+            vector_store.add_documents(documents=doc_batch, ids=id_batch)
         return jsonify({"message": "File uploaded and indexed successfully"})
 
     except Exception as e:
