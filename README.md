@@ -15,7 +15,7 @@
 -  **Tailwind CSS-based UI** with animations  
 
 ---
-## 🔧 Installation & Setup  
+## Installation & Setup  
 
 ### **1. Clone the Repository**  
 
